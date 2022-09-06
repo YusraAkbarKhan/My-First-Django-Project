@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>Books</title>{% endblock title %}
+
+{% block content %}
+<div class="container">
+
+  <h1><a href="{% url 'upload-book' %}">upload-book</a></h1>
+
+    {% for book in books %}
+    <div class="card my-2 p-2">
+      <div class="book_image">
+        <img src="{{book.get_image_url}}" alt="">
+      </div>
+      <h1>{{book.title}}</h1>
+      <ul>
+        {% for genre in book.genre.all %}
+            <li>{{genre.name}}</li>
+        {% endfor %}
+      </ul>
+      <p>{{book.author}}</p>
+
+      <div class="btn-group">
+        <a href="{% url 'update-book' book_id=book.id %}" class='btn btn-warning' id='{{book.id}}'>Edit</a>
+        <a href="{% url 'delete-book' book_id=book.id %}" class='btn btn-danger' id='{{book.id}}'>Delete</a>
+      </div>
+     
+    </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
